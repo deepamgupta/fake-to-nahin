@@ -53,8 +53,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData)
-                    return Text('No Post Yet',
-                        style: TextStyle(fontSize: 20.0));
+                    return Center(
+                        child: Text(
+                      'You haven\'t posted anything yet...',
+                      style: TextStyle(fontSize: 20.0, color: Colors.black),
+                    ));
                   return ListView.builder(
                       itemCount: snapshot.data.documents.length,
                       itemBuilder: (context, index) => _buildPostCard(

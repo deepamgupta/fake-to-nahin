@@ -115,8 +115,8 @@ class _SignInScreenState extends State<SignInScreen> {
             child: Center(
               child: RichText(
                 text: TextSpan(
-                    text: 'Don\'t have an account?',
-                    style: TextStyle(color: Colors.black),
+                    text: 'Don\'t have an account?  ',
+                    style: TextStyle(color: Colors.black, fontSize: 17.0),
                     children: [
                       TextSpan(
                         text: 'SIGN UP',
@@ -128,7 +128,18 @@ class _SignInScreenState extends State<SignInScreen> {
                     ]),
               ),
             ),
-          )
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: RichText(
+              text: TextSpan(
+                text: 'Made with ❤️ in 🇮🇳',
+                style: TextStyle(color: Colors.black, fontSize: 19.0),
+              ),
+            ),
+          ),
         ],
       ),
     );

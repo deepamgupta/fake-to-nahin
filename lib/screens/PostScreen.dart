@@ -1,5 +1,6 @@
 import 'package:fake_to_nahin/models/PostModel.dart';
 import 'package:fake_to_nahin/models/ResourceModel.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -117,6 +118,8 @@ class _PostScreenState extends State<PostScreen> {
                                                 onPressed: () {
                                                   addResourceToPost().then(
                                                       (value) => {
+                                                            resourceController
+                                                                .clear(),
                                                             Navigator.of(
                                                                     context)
                                                                 .pop()
@@ -143,6 +146,7 @@ class _PostScreenState extends State<PostScreen> {
                                   .collection('posts')
                                   .document(post.id)
                                   .collection('resources')
+                                  .orderBy("dateCreated", descending: true)
                                   .snapshots(),
                               builder: (context, snapshot) {
                                 if (!snapshot.hasData)
@@ -222,6 +226,14 @@ class _PostScreenState extends State<PostScreen> {
   }
 
   Future deletePost() async {
+    RegExp regExp = new RegExp(
+      r"com\/o(.*?)\?alt",
+      caseSensitive: false,
+      multiLine: false,
+    );
+
+    var mediaPath =
+        regExp.firstMatch(post.mediaPath).group(1).replaceAll('%2F', '/');
     // delete all links to the post
     await Firestore.instance
         .collection("posts")
@@ -232,6 +244,9 @@ class _PostScreenState extends State<PostScreen> {
               for (DocumentSnapshot ds in snapshot.documents)
                 {ds.reference.delete()}
             });
+
+    // delete all links to the post
+    await FirebaseStorage.instance.ref().child(mediaPath).delete();
 
     // delete post
     await Firestore.instance.collection("posts").document(post.id).delete();

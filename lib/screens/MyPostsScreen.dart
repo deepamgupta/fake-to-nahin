@@ -56,7 +56,10 @@ class _MyPostsScreenState extends State<MyPostsScreen> {
                 builder: (context, snapshot) {
                   if (!snapshot.hasData)
                     return Center(
-                        child: Text('You haven\'t posted anything yet...', style: TextStyle(fontSize: 20.0),));
+                        child: Text(
+                      'You haven\'t posted anything yet...',
+                      style: TextStyle(fontSize: 20.0),
+                    ));
                   return ListView.builder(
                       itemCount: snapshot.data.documents.length,
                       itemBuilder: (context, index) => _buildPostCard(
