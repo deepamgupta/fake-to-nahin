@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:fake_to_nahin/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:fake_to_nahin/globals.dart' as globals;
+import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -8,6 +10,15 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  File _image;
+
+  Future getImage() async {
+    final pickedFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = File(pickedFile.path);
+    });
+  }
   
 
   @override
@@ -33,17 +44,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
           scrollDirection: Axis.vertical,
           children: [
             Container(
+              child: CircleAvatar(backgroundColor: Colors.lightBlue[800],child:IconButton(icon:Icon(Icons.add_a_photo,size:26),onPressed:(){
+                getImage();
+              },),radius: 25,),
                 height: 200,
                 width: 200,
-                alignment: Alignment.center,
+                alignment: Alignment.bottomCenter,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image: (globals.currentUser.imagePath != null) ?NetworkImage(globals.currentUser.imagePath):NetworkImage(
-                            'https://firebasestorage.googleapis.com/v0/b/faketonahin.appspot.com/o/profile%2Fyeah.png?alt=media&token=5bc4f276-9c51-4c0b-9e76-7992868438f0')))),
+                    image: DecorationImage(fit: BoxFit.contain,alignment: Alignment.center,image: (_image==null)?AssetImage('assets/img/logo.png'):FileImage(_image)))),
             Text(globals.currentUser.username,
                 style: TextStyle(
-                    color: Colors.green,
+                    color: Colors.lightBlue[800],
                     fontWeight: FontWeight.bold,
                     fontSize: 25),
                 textAlign: TextAlign.center),
