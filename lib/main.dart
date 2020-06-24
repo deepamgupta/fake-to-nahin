@@ -10,7 +10,6 @@ import 'screens/CreatePostScreen.dart';
 import 'screens/HomeScreen.dart';
 import 'screens/SignInScreen.dart';
 import 'screens/SignUpScreen.dart';
-import 'screens/PostScreen.dart';
 import 'screens/ProfileScreen.dart';
 import 'screens/ProfileEditScreen.dart';
 
@@ -51,7 +50,7 @@ class MyApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: false ? 'Home' : 'SignIn',
+      initialRoute: 'SignIn',
       routes: {
         'SignIn': (context) => SignInScreen(),
         'SignUp': (context) => SignUpScreen(),
@@ -59,9 +58,7 @@ class MyApp extends StatelessWidget {
         'CreatePost': (context) => CreatePostScreen(),
         'Profile': (context) => ProfileScreen(),
         'ProfileEdit': (context) => ProfileEditScreen(),
-        // 'Post': (context) => PostScreen(),
         'MyPosts': (context) => MyPostsScreen(),
-        // 'SavedPosts': (context) => SavedPostsScreen(),
       },
     );
   }

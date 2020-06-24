@@ -60,7 +60,6 @@ class MyCustomFormState extends State<MyCustomForm> {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     fit: BoxFit.contain,
-
                     image: AssetImage('assets/img/logo.png'))),
           ),
           TextFormField(
@@ -185,22 +184,10 @@ class MyCustomFormState extends State<MyCustomForm> {
             padding: EdgeInsets.symmetric(vertical: 16.0),
             child: RaisedButton(
               onPressed: () {
+                // _formKey.currentState.validate();
                 // Store user in Database
                 _formKey.currentState.save();
-                var userMap = newUserModel.toMap();
-                final db = Firestore.instance;
-                db
-                    .collection("users")
-                    .document(newUserModel.email)
-                    .setData(userMap);
-                // return showDialog(
-                //   context: context,
-                //   builder: (context) {
-                //     return AlertDialog(
-                //       content: Text(newUserModel.email),
-                //     );
-                //   },
-                // );
+                createUser().then((value) => {Navigator.of(context).pop()});
               },
               child: Text('Submit'),
             ),
@@ -209,13 +196,10 @@ class MyCustomFormState extends State<MyCustomForm> {
       ),
     );
   }
+
+  Future createUser() async {
+    var userMap = newUserModel.toMap();
+    final db = Firestore.instance;
+    await db.collection("users").document(newUserModel.email).setData(userMap);
+  }
 }
-// ListView(
-//             children: <Widget>[
-//               TextFormField(
-//                 controller: myController,
-//                 decoration: InputDecoration(
-//                     border: hintText: 'Enter a search term'),
-//               ),
-//             ],
-//           )
