@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:async';
-import 'package:fake_to_nahin/globals.dart' as globals;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fake_to_nahin/globals.dart' as globals;
 import 'package:fake_to_nahin/models/UserModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:password/password.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -161,7 +160,7 @@ class _SignInScreenState extends State<SignInScreen> {
     File loggedInUserFile = new File(path);
     // print(userDataObj);
     loggedInUserFile.writeAsStringSync(jsonEncode(userDataMap));
-    globals.currentUser = UserModel.fromObject(userDataMap);
+    globals.currentUser = UserModel.toObject(userDataMap);
     Navigator.pushReplacementNamed(context, 'Home');
   }
 

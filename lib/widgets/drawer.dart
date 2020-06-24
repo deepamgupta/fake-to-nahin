@@ -1,5 +1,4 @@
 import 'package:fake_to_nahin/globals.dart' as globals;
-import 'dart:io';
 import 'package:flutter/material.dart';
 
 class DrawerButton extends StatefulWidget {
