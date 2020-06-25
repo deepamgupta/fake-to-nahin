@@ -1,9 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_to_nahin/models/PostModel.dart';
 import 'package:fake_to_nahin/screens/PostScreen.dart';
 import 'package:fake_to_nahin/widgets/drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -66,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildPostCard(BuildContext context, DocumentSnapshot document) {
-    var post = PostModel.fromObject(document);
+    var post = PostModel.toObject(document);
     post.id = document.documentID;
 
     return Card(

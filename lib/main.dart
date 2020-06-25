@@ -4,6 +4,8 @@ import 'package:fake_to_nahin/screens/MyPostsScreen.dart';
 import 'package:flutter/material.dart';
 import 'screens/CreatePostScreen.dart';
 import 'screens/HomeScreen.dart';
+import 'screens/ProfileEditScreen.dart';
+import 'screens/ProfileScreen.dart';
 import 'screens/SignInScreen.dart';
 import 'screens/SignUpScreen.dart';
 import 'screens/ProfileScreen.dart';
@@ -46,7 +48,7 @@ class MyApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute:'SignIn',
+      initialRoute: 'SignIn',
       routes: {
         'SignIn': (context) => SignInScreen(),
         'SignUp': (context) => SignUpScreen(),
@@ -54,7 +56,6 @@ class MyApp extends StatelessWidget {
         'CreatePost': (context) => CreatePostScreen(),
         'Profile': (context) => ProfileScreen(),
         'ProfileEdit': (context) => ProfileEditScreen(),
-        // 'Post': (context) => PostScreen(),
         'MyPosts': (context) => MyPostsScreen(),
         // 'SavedPosts': (context) => SavedPostsScreen(),
         'ChangePassword': (context) => ChangePassword(),

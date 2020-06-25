@@ -1,6 +1,8 @@
 import 'package:fake_to_nahin/models/UserModel.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:password/password.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -37,16 +39,6 @@ class MyCustomFormState extends State<MyCustomForm> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
   UserModel newUserModel = new UserModel();
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
-  TextEditingController countryController = TextEditingController();
-  TextEditingController stateController = TextEditingController();
-  TextEditingController cityController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController imagePathController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -60,11 +52,9 @@ class MyCustomFormState extends State<MyCustomForm> {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     fit: BoxFit.contain,
-
                     image: AssetImage('assets/img/logo.png'))),
           ),
           TextFormField(
-            controller: firstNameController,
             decoration: InputDecoration(labelText: 'First Name'),
             validator: (value) {
               if (value.isEmpty) {
@@ -77,7 +67,6 @@ class MyCustomFormState extends State<MyCustomForm> {
             },
           ),
           TextFormField(
-            controller: lastNameController,
             decoration: InputDecoration(labelText: 'Last Name'),
             validator: (value) {
               if (value.isEmpty) {
@@ -90,7 +79,6 @@ class MyCustomFormState extends State<MyCustomForm> {
             },
           ),
           TextFormField(
-            controller: usernameController,
             decoration: InputDecoration(labelText: 'Username'),
             validator: (value) {
               if (value.isEmpty) {
@@ -103,7 +91,6 @@ class MyCustomFormState extends State<MyCustomForm> {
             },
           ),
           TextFormField(
-            controller: emailController,
             decoration: InputDecoration(labelText: 'Email Id'),
             validator: (value) {
               if (value.isEmpty) {
@@ -116,7 +103,6 @@ class MyCustomFormState extends State<MyCustomForm> {
             },
           ),
           TextFormField(
-            controller: mobileController,
             decoration: InputDecoration(labelText: 'Mobile'),
             validator: (value) {
               if (value.isEmpty) {
@@ -129,7 +115,6 @@ class MyCustomFormState extends State<MyCustomForm> {
             },
           ),
           TextFormField(
-            controller: countryController,
             decoration: InputDecoration(labelText: 'Country'),
             validator: (value) {
               if (value.isEmpty) {
@@ -142,7 +127,6 @@ class MyCustomFormState extends State<MyCustomForm> {
             },
           ),
           TextFormField(
-            controller: stateController,
             decoration: InputDecoration(labelText: 'State'),
             validator: (value) {
               if (value.isEmpty) {
@@ -155,7 +139,6 @@ class MyCustomFormState extends State<MyCustomForm> {
             },
           ),
           TextFormField(
-            controller: cityController,
             decoration: InputDecoration(labelText: 'City'),
             validator: (value) {
               if (value.isEmpty) {
@@ -168,7 +151,6 @@ class MyCustomFormState extends State<MyCustomForm> {
             },
           ),
           TextFormField(
-            controller: passwordController,
             obscureText: true,
             decoration: InputDecoration(labelText: 'Password'),
             validator: (value) {
@@ -178,29 +160,17 @@ class MyCustomFormState extends State<MyCustomForm> {
               return null;
             },
             onSaved: (value) {
-              newUserModel.password = value;
+              newUserModel.password = Password.hash(value, new PBKDF2());
             },
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0),
             child: RaisedButton(
               onPressed: () {
+                // _formKey.currentState.validate();
                 // Store user in Database
                 _formKey.currentState.save();
-                var userMap = newUserModel.toMap();
-                final db = Firestore.instance;
-                db
-                    .collection("users")
-                    .document(newUserModel.email)
-                    .setData(userMap);
-                // return showDialog(
-                //   context: context,
-                //   builder: (context) {
-                //     return AlertDialog(
-                //       content: Text(newUserModel.email),
-                //     );
-                //   },
-                // );
+                createUser().then((value) => {Navigator.of(context).pop()});
               },
               child: Text('Submit'),
             ),
@@ -209,13 +179,26 @@ class MyCustomFormState extends State<MyCustomForm> {
       ),
     );
   }
+
+  Future createUser() async {
+    try {
+      var userMap = newUserModel.toMap();
+      final db = Firestore.instance;
+      await db
+          .collection("users")
+          .document(newUserModel.email)
+          .setData(userMap);
+
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+      final FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
+        email: newUserModel.email,
+        password: newUserModel.password,
+      ))
+          .user;
+      user.sendEmailVerification().then((value) => print("EMail Sent"));
+      print(user.toString());
+    } catch (err) {
+      print(err.toString());
+    }
+  }
 }
-// ListView(
-//             children: <Widget>[
-//               TextFormField(
-//                 controller: myController,
-//                 decoration: InputDecoration(
-//                     border: hintText: 'Enter a search term'),
-//               ),
-//             ],
-//           )

@@ -8,7 +8,7 @@ import '../globals.dart' as globals;
 import 'package:intl/intl.dart';
 
 class PostScreen extends StatefulWidget {
-  PostModel post;
+  final PostModel post;
   PostScreen(this.post);
 
   @override
@@ -180,7 +180,7 @@ class _PostScreenState extends State<PostScreen> {
   }
 
   Widget _buildCommentCards(BuildContext context, DocumentSnapshot document) {
-    var resource = ResourceModel.fromObject(document);
+    var resource = ResourceModel.toObject(document);
     resource.id = document.documentID;
 
     return Container(
