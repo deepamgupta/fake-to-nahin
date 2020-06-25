@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:fake_to_nahin/globals.dart' as globals;
+import 'package:fake_to_nahin/screens/ChangePassword.dart';
 import 'package:fake_to_nahin/screens/MyPostsScreen.dart';
 import 'package:fake_to_nahin/screens/SavedPostsScreen.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         // 'Post': (context) => PostScreen(),
         'MyPosts': (context) => MyPostsScreen(),
         // 'SavedPosts': (context) => SavedPostsScreen(),
+        'ChangePassword': (context) => ChangePassword(),
       },
     );
   }
