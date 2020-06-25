@@ -132,29 +132,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
                 child: Row(
                   children: [
-                    Expanded(flex:2,child:Text('Mobile NO.:', style: TextStyle(fontSize: 20))),
+                    Expanded(flex:2,child:Text('Mobile No.:', style: TextStyle(fontSize: 20))),
                     Expanded(
                       flex: 5,
                       child:TextFormField(
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       keyboardType: TextInputType.phone,
                       initialValue: globals.currentUser.mobile,
-                      cursorWidth: 2,
-                    )),
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                )),
-            Card(
-                margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-                child: Row(
-                  children: [
-                    Expanded(flex:2,child:Text('E-mail ID:', style: TextStyle(fontSize: 20))),
-                    Expanded(
-                      flex: 5,
-                      child:TextFormField(
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                      keyboardType: TextInputType.emailAddress,
-                      initialValue: globals.currentUser.email,
                       cursorWidth: 2,
                     )),
                   ],

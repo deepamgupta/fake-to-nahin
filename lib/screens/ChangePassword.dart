@@ -15,7 +15,36 @@ class _ChangePasswordState extends State<ChangePassword> {
         title: Text('ChangePassword',style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
       ),
       body: ListView(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(15),
+        children: [
+          SizedBox(height:25),
+          Row(children:[
+            Expanded(
+                      child:TextFormField(
+              decoration:InputDecoration(hintText:'Current Password'),
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      cursorWidth: 2,
+                    ))
+          ]),
+          SizedBox(height:25),
+          Row(children:[
+            Expanded(
+                      child:TextFormField(
+              decoration:InputDecoration(hintText:'Enter New Password'),
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      cursorWidth: 2,
+                    ))
+          ]),
+          SizedBox(height:25),
+          Row(children:[
+            Expanded(
+                      child:TextFormField(
+              decoration:InputDecoration(hintText:'Confirm New Password'),
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      cursorWidth: 2,
+            ))
+          ])
+        ],
 
       ),
     );
