@@ -1,17 +1,11 @@
-import 'dart:convert';
-import 'dart:io';
 
-import 'package:fake_to_nahin/globals.dart' as globals;
 import 'package:fake_to_nahin/screens/ChangePassword.dart';
 import 'package:fake_to_nahin/screens/MyPostsScreen.dart';
-import 'package:fake_to_nahin/screens/SavedPostsScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'screens/CreatePostScreen.dart';
 import 'screens/HomeScreen.dart';
 import 'screens/SignInScreen.dart';
 import 'screens/SignUpScreen.dart';
-import 'screens/PostScreen.dart';
 import 'screens/ProfileScreen.dart';
 import 'screens/ProfileEditScreen.dart';
 
@@ -52,7 +46,7 @@ class MyApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: false ? 'Home' : 'SignIn',
+      initialRoute:'SignIn',
       routes: {
         'SignIn': (context) => SignInScreen(),
         'SignUp': (context) => SignUpScreen(),
