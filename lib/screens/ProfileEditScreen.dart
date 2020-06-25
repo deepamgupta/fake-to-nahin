@@ -20,7 +20,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           actions: [
             RaisedButton(
               onPressed: () {
-                Navigator.pushNamed(context, 'Profile');
+                Navigator.pop(context);
               },
               child: Row(children: [Icon(Icons.save), Text('Save Changes',style: TextStyle(color: Colors.white, fontSize: 20))]),
               color: Colors.lightBlue[800],
