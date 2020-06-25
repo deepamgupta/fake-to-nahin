@@ -8,9 +8,6 @@ import 'screens/ProfileEditScreen.dart';
 import 'screens/ProfileScreen.dart';
 import 'screens/SignInScreen.dart';
 import 'screens/SignUpScreen.dart';
-import 'screens/ProfileScreen.dart';
-import 'screens/ProfileEditScreen.dart';
-
 bool loggedIn = false;
 
 void main() {
