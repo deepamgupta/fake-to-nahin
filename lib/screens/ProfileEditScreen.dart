@@ -1,8 +1,6 @@
 import '../globals.dart' as globals;
-import 'package:fake_to_nahin/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class ProfileEditScreen extends StatefulWidget {
