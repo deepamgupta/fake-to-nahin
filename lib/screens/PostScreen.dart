@@ -19,7 +19,7 @@ class _PostScreenState extends State<PostScreen> {
   PostModel post;
   _PostScreenState(this.post);
   TextEditingController resourceController = TextEditingController();
-
+  String summary = "real";
   String id;
   @override
   Widget build(BuildContext context) {
@@ -107,26 +107,65 @@ class _PostScreenState extends State<PostScreen> {
                                       context: context,
                                       builder: (context) {
                                         return AlertDialog(
-                                          title: Text('Enter a link'),
-                                          content: Column(children: [
-                                            TextField(
-                                              controller: resourceController,
-                                              decoration: InputDecoration(
-                                                  hintText: 'Enter link here'),
-                                            ),
-                                            RaisedButton(
-                                                onPressed: () {
-                                                  addResourceToPost().then(
-                                                      (value) => {
-                                                            resourceController
-                                                                .clear(),
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop()
-                                                          });
-                                                },
-                                                child: Text('Post'))
-                                          ]),
+                                          title: Text(
+                                            'Enter a link',
+                                            style: TextStyle(
+                                                fontSize: 24.0,
+                                                fontStyle: FontStyle.normal),
+                                          ),
+                                          content: SizedBox(
+                                            height: 220.0,
+                                            child: Column(children: [
+                                              TextField(
+                                                controller: resourceController,
+                                                decoration: InputDecoration(
+                                                    hintText:
+                                                        'Enter link here'),
+                                              ),
+                                              StatefulBuilder(builder:
+                                                  (BuildContext context,
+                                                      StateSetter setState) {
+                                                return Column(
+                                                  children: <Widget>[
+                                                    RadioListTile<String>(
+                                                      title: const Text('Real'),
+                                                      value: "real",
+                                                      groupValue: summary,
+                                                      onChanged:
+                                                          (String value) {
+                                                        setState(() {
+                                                          summary = value;
+                                                        });
+                                                      },
+                                                    ),
+                                                    RadioListTile<String>(
+                                                      title: const Text('Fake'),
+                                                      value: "fake",
+                                                      groupValue: summary,
+                                                      onChanged:
+                                                          (String value) {
+                                                        setState(() {
+                                                          summary = value;
+                                                        });
+                                                      },
+                                                    ),
+                                                  ],
+                                                );
+                                              }),
+                                              RaisedButton(
+                                                  onPressed: () {
+                                                    addResourceToPost().then(
+                                                        (value) => {
+                                                              resourceController
+                                                                  .clear(),
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop()
+                                                            });
+                                                  },
+                                                  child: Text('Post'))
+                                            ]),
+                                          ),
                                         );
                                       },
                                     );
@@ -156,7 +195,7 @@ class _PostScreenState extends State<PostScreen> {
                                     shrinkWrap: true,
                                     itemCount: snapshot.data.documents.length,
                                     itemBuilder: (context, index) =>
-                                        _buildCommentCards(context,
+                                        _buildResourceCards(context,
                                             snapshot.data.documents[index]));
                               })
                         ])
@@ -170,7 +209,8 @@ class _PostScreenState extends State<PostScreen> {
     ResourceModel newResource = ResourceModel(
         globals.currentUser.username,
         DateFormat("d MMM yyyy, h:mm a").format(DateTime.now()),
-        resourceController.text);
+        resourceController.text,
+        summary);
 
     await Firestore.instance
         .collection('posts')
@@ -179,7 +219,7 @@ class _PostScreenState extends State<PostScreen> {
         .add(newResource.toMap());
   }
 
-  Widget _buildCommentCards(BuildContext context, DocumentSnapshot document) {
+  Widget _buildResourceCards(BuildContext context, DocumentSnapshot document) {
     var resource = ResourceModel.toObject(document);
     resource.id = document.documentID;
 
@@ -201,17 +241,50 @@ class _PostScreenState extends State<PostScreen> {
               ),
             ],
           ),
-          InkWell(
-            onTap: () => launchURL(resource.link),
-            child: RichText(
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                text: TextSpan(
-                    text: resource.link,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(
+                child: InkWell(
+                  onTap: () => launchURL(resource.link),
+                  child: RichText(
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      text: TextSpan(
+                          text: resource.link,
+                          style: TextStyle(
+                              color: Colors.blueAccent,
+                              decoration: TextDecoration.underline))),
+                ),
+                flex: 8,
+              ),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                    color:
+                        resource.summary == "real" ? Colors.green : Colors.red),
+                child: Padding(
+                  padding: EdgeInsets.all(3.0),
+                  child: Text(
+                    resource.summary == "real" ? "REAL" : "FAKE",
                     style: TextStyle(
-                        color: Colors.blueAccent,
-                        decoration: TextDecoration.underline))),
-          )
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        backgroundColor: resource.summary == "real"
+                            ? Colors.green
+                            : Colors.red),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          // DecoratedBox(
+          //     decoration: BoxDecoration(
+          //         color: resource.summary == "real" ? Colors.green : Colors.red,
+          //         image: DecorationImage(
+          //             image: resource.summary == "real"
+          //                 ? AssetImage("genuine-stamp.png")
+          //                 : AssetImage("fake-stamp.png"))))
         ],
       ),
     );
