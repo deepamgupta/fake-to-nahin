@@ -70,8 +70,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     color: Colors.lightBlue[800])),
             TextField(
               controller: titleController,
-              maxLines: 3,
               keyboardType: TextInputType.multiline,
+              maxLength: 100,
               style: TextStyle(fontSize: 20, color: Colors.black),
               decoration: InputDecoration(
                   hintText: 'Please Enter Heading for your post'),
@@ -84,7 +84,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             TextField(
               controller: descriptionController,
               keyboardType: TextInputType.multiline,
-              maxLines: 3,
+              maxLength: 200,
               style: TextStyle(fontSize: 20, color: Colors.black),
               decoration: InputDecoration(
                   hintText: 'Please Enter Description for your post'),

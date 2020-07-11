@@ -56,13 +56,13 @@ class _PostScreenState extends State<PostScreen> {
                       text: TextSpan(
                           text: post.title,
                           style: TextStyle(
-                              fontSize: 26,
+                              fontSize: 24,
                               color: Colors.lightBlue[800],
                               fontWeight: FontWeight.bold))),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(post.username,
+                      Text('@' + post.username,
                           style: TextStyle(
                               fontSize: 22, fontWeight: FontWeight.bold)),
                       Text(post.dateCreated,
@@ -73,9 +73,10 @@ class _PostScreenState extends State<PostScreen> {
                       widthFactor: 0.95,
                       child: Image.network(
                         post.mediaPath,
-                        fit: BoxFit.fitWidth,
+                        fit: BoxFit.contain,
+                        height: 400,
                       )),
-                  Text("Description\n",
+                  Text("Description",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 23,
@@ -83,7 +84,7 @@ class _PostScreenState extends State<PostScreen> {
                   RichText(
                       text: TextSpan(
                           text: post.description,
-                          style: TextStyle(fontSize: 18, color: Colors.black))),
+                          style: TextStyle(fontSize: 19, color: Colors.black))),
                   Container(
                       padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
                       child: Column(children: [
@@ -95,7 +96,7 @@ class _PostScreenState extends State<PostScreen> {
                                 'Links to Resources',
                                 style: TextStyle(
                                     color: Colors.lightBlue[800],
-                                    fontSize: 22,
+                                    fontSize: 24,
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -240,15 +241,18 @@ class _PostScreenState extends State<PostScreen> {
               ),
             ],
           ),
-          SizedBox(height: 3),
+          SizedBox(height: 2),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Full Article Here'),
+                    Text(
+                      'Full Article Here',
+                      style: TextStyle(fontSize: 16),
+                    ),
                     InkWell(
                       onTap: () => launchURL(resource.link),
                       child: RichText(
@@ -340,7 +344,7 @@ class _PostScreenState extends State<PostScreen> {
                 {ds.reference.delete()}
             });
 
-    // delete all links to the post
+    // delete image from firestorage
     await FirebaseStorage.instance.ref().child(mediaPath).delete();
 
     // delete post

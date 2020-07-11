@@ -14,9 +14,10 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   File _image;
+  final picker = ImagePicker();
 
-  Future getImage() async {
-    final pickedFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+  Future<void> getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
       _image = File(pickedFile.path);
@@ -78,13 +79,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Colors.white,
                         ),
                         onPressed: () async {
-                          getImage();
-                          globals.currentUser.imagePath = await uploadFile();
-                          Firestore.instance
-                              .collection('users')
-                              .document(globals.currentUser.email)
-                              .updateData(
-                                  {'imagePath': globals.currentUser.imagePath});
+                          getImage().then((value) async => {
+                                deleteImage(),
+                                uploadFile().then((value) async => {
+                                      globals.currentUser.imagePath = value,
+                                      await Firestore.instance
+                                          .collection('users')
+                                          .document(globals.currentUser.email)
+                                          .setData({
+                                        'imagePath':
+                                            globals.currentUser.imagePath
+                                      }, merge: true),
+                                      await Navigator.pushReplacementNamed(
+                                          context, 'Profile')
+                                    })
+                              });
                         },
                       ),
                       backgroundColor: Colors.lightBlue[800],
@@ -193,8 +202,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
         .ref()
         .child('users/${Path.basename(_image.path)}');
     final StorageUploadTask uploadTask = storageReference.putFile(_image);
-    final StorageTaskSnapshot downloadUrl = (await uploadTask.onComplete);
-    final String url = (await downloadUrl.ref.getDownloadURL());
+    final StorageTaskSnapshot downloadUrl = await uploadTask.onComplete;
+    final String url = await downloadUrl.ref.getDownloadURL();
     return url;
+  }
+
+  Future deleteImage() async {
+    RegExp regExp = new RegExp(
+      r"com\/o(.*?)\?alt",
+      caseSensitive: false,
+      multiLine: false,
+    );
+
+    var mediaPath = regExp
+        .firstMatch(globals.currentUser.imagePath)
+        .group(1)
+        .replaceAll('%2F', '/');
+    // delete image from firestorage
+    await FirebaseStorage.instance.ref().child(mediaPath).delete();
   }
 }
