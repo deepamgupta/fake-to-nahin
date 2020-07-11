@@ -271,31 +271,33 @@ class _PostScreenState extends State<PostScreen> {
                     children: [
                       Text('In-Short'),
                       DecoratedBox(
-                          decoration: BoxDecoration(
-                              //           image: DecorationImage(
-                              //               fit: BoxFit.contain,
-                              //               image: resource.summary == "real"
-                              //                   ? AssetImage('genuine-stamp.png')
-                              //                   : AssetImage('fake-stamp.png')))
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: resource.summary == "real"
+                                    ? AssetImage('assets/img/genuine-stamp.png')
+                                    : AssetImage('assets/img/fake-stamp.png'))
 
-                              color: resource.summary == "real"
-                                  ? Colors.green
-                                  : Colors.red),
-                          child: Center(
-                            child: Padding(
-                              padding: EdgeInsets.all(3.0),
-                              child: Text(
-                                resource.summary == "real" ? "REAL" : "FAKE",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    backgroundColor: resource.summary == "real"
-                                        ? Colors.green
-                                        : Colors.red),
-                              ),
+                            //     color: resource.summary == "real"
+                            //         ? Colors.green
+                            //         : Colors.red),
+                            // child: Center(
+                            //   child: Padding(
+                            //     padding: EdgeInsets.all(3.0),
+                            //     child: Text(
+                            //       resource.summary == "real" ? "REAL" : "FAKE",
+                            //       style: TextStyle(
+                            //           fontSize: 16,
+                            //           color: Colors.white,
+                            //           fontWeight: FontWeight.bold,
+                            //           backgroundColor: resource.summary == "real"
+                            //               ? Colors.green
+                            //               : Colors.red),
+                            //     ),
+                            //   ),
                             ),
-                          ))
+                        child: Text('                   \n\n'),
+                      )
                     ],
                   ))
             ],

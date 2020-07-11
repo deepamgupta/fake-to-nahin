@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_to_nahin/widgets/drawer.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as Path;
 import 'package:fake_to_nahin/globals.dart' as globals;
 import 'package:image_picker/image_picker.dart';
 
@@ -62,8 +65,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: 200,
                   height: 200,
                   child: CircleAvatar(
-                      backgroundImage: (_image != null)
-                          ? FileImage(_image)
+                      backgroundImage: (globals.currentUser.imagePath != null)
+                          ? NetworkImage(globals.currentUser.imagePath)
                           : AssetImage('assets/img/logo.png')),
                 ),
                 Positioned(
@@ -74,8 +77,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Icons.add_photo_alternate,
                           color: Colors.white,
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           getImage();
+                          globals.currentUser.imagePath = await uploadFile();
+                          Firestore.instance
+                              .collection('users')
+                              .document(globals.currentUser.email)
+                              .updateData(
+                                  {'imagePath': globals.currentUser.imagePath});
                         },
                       ),
                       backgroundColor: Colors.lightBlue[800],
@@ -151,31 +160,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 )),
-            Card(
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: Row(
-                  children: [
-                    Text('Password:', style: TextStyle(fontSize: 20)),
-                    RaisedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, 'ChangePassword');
-                      },
-                      child: Text('Change Password',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white)),
-                      color: Colors.lightBlue[800],
-                    ),
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                )),
+            // Card(
+            //     margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+            //     child: Row(
+            //       children: [
+            //         Text('Password:', style: TextStyle(fontSize: 20)),
+            //         RaisedButton(
+            //           onPressed: () {
+            //             Navigator.pushNamed(context, 'ChangePassword');
+            //           },
+            //           child: Text('Change Password',
+            //               style: TextStyle(
+            //                   fontSize: 20,
+            //                   fontWeight: FontWeight.bold,
+            //                   color: Colors.white)),
+            //           color: Colors.lightBlue[800],
+            //         ),
+            //       ],
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       crossAxisAlignment: CrossAxisAlignment.end,
+            //     )),
           ]),
     );
   }
 
   String capitalize(word) {
     return "${word[0].toUpperCase()}${word.substring(1)}";
+  }
+
+  Future<String> uploadFile() async {
+    var storageReference = FirebaseStorage.instance
+        .ref()
+        .child('users/${Path.basename(_image.path)}');
+    final StorageUploadTask uploadTask = storageReference.putFile(_image);
+    final StorageTaskSnapshot downloadUrl = (await uploadTask.onComplete);
+    final String url = (await downloadUrl.ref.getDownloadURL());
+    return url;
   }
 }
