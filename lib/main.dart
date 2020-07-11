@@ -1,13 +1,13 @@
+
+import 'package:fake_to_nahin/screens/ChangePassword.dart';
 import 'package:fake_to_nahin/screens/MyPostsScreen.dart';
 import 'package:flutter/material.dart';
-
 import 'screens/CreatePostScreen.dart';
 import 'screens/HomeScreen.dart';
 import 'screens/ProfileEditScreen.dart';
 import 'screens/ProfileScreen.dart';
 import 'screens/SignInScreen.dart';
 import 'screens/SignUpScreen.dart';
-
 bool loggedIn = false;
 
 void main() {
@@ -54,6 +54,8 @@ class MyApp extends StatelessWidget {
         'Profile': (context) => ProfileScreen(),
         'ProfileEdit': (context) => ProfileEditScreen(),
         'MyPosts': (context) => MyPostsScreen(),
+        // 'SavedPosts': (context) => SavedPostsScreen(),
+        'ChangePassword': (context) => ChangePassword(),
       },
     );
   }
