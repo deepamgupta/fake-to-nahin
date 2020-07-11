@@ -56,7 +56,7 @@ class _PostScreenState extends State<PostScreen> {
                       text: TextSpan(
                           text: post.title,
                           style: TextStyle(
-                              fontSize: 24,
+                              fontSize: 25,
                               color: Colors.lightBlue[800],
                               fontWeight: FontWeight.bold))),
                   Row(
@@ -64,9 +64,9 @@ class _PostScreenState extends State<PostScreen> {
                     children: [
                       Text('@' + post.username,
                           style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold)),
+                              fontSize: 20, fontWeight: FontWeight.bold)),
                       Text(post.dateCreated,
-                          style: TextStyle(fontSize: 20, color: Colors.grey))
+                          style: TextStyle(fontSize: 18, color: Colors.grey))
                     ],
                   ),
                   FractionallySizedBox(
