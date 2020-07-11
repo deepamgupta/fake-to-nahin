@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,9 +6,7 @@ import 'package:fake_to_nahin/models/UserModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:password/password.dart';
-import 'package:path_provider/path_provider.dart';
 
-import '../models/UserModel.dart';
 import '../models/UserModel.dart';
 
 class SignInScreen extends StatefulWidget {

@@ -224,16 +224,15 @@ class _PostScreenState extends State<PostScreen> {
     resource.id = document.documentID;
 
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
                 '@' + resource.username,
-                style: TextStyle(fontSize: 18.0),
+                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
               ),
               Text(
                 resource.dateCreated,
@@ -241,50 +240,71 @@ class _PostScreenState extends State<PostScreen> {
               ),
             ],
           ),
+          SizedBox(height: 3),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
-                child: InkWell(
-                  onTap: () => launchURL(resource.link),
-                  child: RichText(
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      text: TextSpan(
-                          text: resource.link,
-                          style: TextStyle(
-                              color: Colors.blueAccent,
-                              decoration: TextDecoration.underline))),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Full Article Here'),
+                    InkWell(
+                      onTap: () => launchURL(resource.link),
+                      child: RichText(
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          text: TextSpan(
+                              text: resource.link,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.blueAccent,
+                                  decoration: TextDecoration.underline))),
+                    ),
+                  ],
                 ),
-                flex: 8,
+                flex: 11,
               ),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                    color:
-                        resource.summary == "real" ? Colors.green : Colors.red),
-                child: Padding(
-                  padding: EdgeInsets.all(3.0),
-                  child: Text(
-                    resource.summary == "real" ? "REAL" : "FAKE",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        backgroundColor: resource.summary == "real"
-                            ? Colors.green
-                            : Colors.red),
-                  ),
-                ),
-              ),
+              Expanded(
+                  flex: 2,
+                  child: Column(
+                    children: [
+                      Text('In-Short'),
+                      DecoratedBox(
+                          decoration: BoxDecoration(
+                              //           image: DecorationImage(
+                              //               fit: BoxFit.contain,
+                              //               image: resource.summary == "real"
+                              //                   ? AssetImage('genuine-stamp.png')
+                              //                   : AssetImage('fake-stamp.png')))
+
+                              color: resource.summary == "real"
+                                  ? Colors.green
+                                  : Colors.red),
+                          child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(3.0),
+                              child: Text(
+                                resource.summary == "real" ? "REAL" : "FAKE",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    backgroundColor: resource.summary == "real"
+                                        ? Colors.green
+                                        : Colors.red),
+                              ),
+                            ),
+                          ))
+                    ],
+                  ))
             ],
           ),
 
           // DecoratedBox(
           //     decoration: BoxDecoration(
           //         color: resource.summary == "real" ? Colors.green : Colors.red,
-          //         image: DecorationImage(
-          //             image: resource.summary == "real"
-          //                 ? AssetImage("genuine-stamp.png")
-          //                 : AssetImage("fake-stamp.png"))))
+          // ))
         ],
       ),
     );
