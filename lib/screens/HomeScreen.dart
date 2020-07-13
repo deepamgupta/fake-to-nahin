@@ -89,49 +89,52 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: BorderStyle.values[1])),
                 child: Padding(
                     padding: EdgeInsets.all(10),
-                    child: Column(children: [
-                      RichText(
-                          text: TextSpan(
-                              text: post.title,
-                              style: TextStyle(
-                                  fontSize: 26,
-                                  color: Colors.lightBlue[800],
-                                  fontWeight: FontWeight.bold))),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('@' + post.username,
-                              style: TextStyle(
-                                  fontSize: 22, fontWeight: FontWeight.bold)),
-                          Text(post.dateCreated,
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.grey))
-                        ],
-                      ),
-                      FractionallySizedBox(
-                          widthFactor: 0.95,
-                          child: (post.mediaPath != null)
-                              ? Image.network(
-                                  post.mediaPath,
-                                  fit: BoxFit.fitWidth,
-                                )
-                              : Text('')),
-                      Text("Description\n",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 23,
-                              fontWeight: FontWeight.bold)),
-                      RichText(
-                          overflow: TextOverflow.fade,
-                          maxLines: 3,
-                          text: TextSpan(
-                              text: post.description,
-                              style: TextStyle(
-                                  fontSize: 18, color: Colors.black))),
-                      Text('Read More and View Resources',
-                          style: TextStyle(
-                              color: Colors.blue,
-                              decoration: TextDecoration.underline))
-                    ])))));
+                    child: Column(
+                      children: [
+                        RichText(
+                            text: TextSpan(
+                                text: post.title,
+                                style: TextStyle(
+                                    fontSize: 23,
+                                    color: Colors.lightBlue[800],
+                                    fontWeight: FontWeight.bold))),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('@' + post.username,
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold)),
+                            Text(post.dateCreated,
+                                style:
+                                    TextStyle(fontSize: 18, color: Colors.grey))
+                          ],
+                        ),
+                        Center(
+                            child: (post.mediaPath != null)
+                                ? Image.network(
+                                    post.mediaPath,
+                                    fit: BoxFit.contain,
+                                    height: 250,
+                                  )
+                                : Text('')),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        RichText(
+                            textAlign: TextAlign.left,
+                            overflow: TextOverflow.fade,
+                            maxLines: 3,
+                            text: TextSpan(
+                                text: post.description,
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black))),
+                        Center(
+                            child: Text('Read More and View Resources',
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    decoration: TextDecoration.underline)))
+                      ],
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                    )))));
   }
 }

@@ -63,7 +63,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               return null;
             },
             onSaved: (value) {
-              newUserModel.firstName = value;
+              newUserModel.firstName = value.trim();
             },
           ),
           TextFormField(
@@ -75,7 +75,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               return null;
             },
             onSaved: (value) {
-              newUserModel.lastName = value;
+              newUserModel.lastName = value.trim();
             },
           ),
           TextFormField(
@@ -87,10 +87,11 @@ class MyCustomFormState extends State<MyCustomForm> {
               return null;
             },
             onSaved: (value) {
-              newUserModel.username = value;
+              newUserModel.username = value.trim();
             },
           ),
           TextFormField(
+            keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(labelText: 'Email Id'),
             validator: (value) {
               if (value.isEmpty) {
@@ -99,7 +100,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               return null;
             },
             onSaved: (value) {
-              newUserModel.email = value;
+              newUserModel.email = value.trim();
             },
           ),
           TextFormField(
@@ -111,7 +112,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               return null;
             },
             onSaved: (value) {
-              newUserModel.mobile = value;
+              newUserModel.mobile = value.trim();
             },
           ),
           TextFormField(
@@ -123,7 +124,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               return null;
             },
             onSaved: (value) {
-              newUserModel.country = value;
+              newUserModel.country = value.trim();
             },
           ),
           TextFormField(
@@ -135,7 +136,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               return null;
             },
             onSaved: (value) {
-              newUserModel.state = value;
+              newUserModel.state = value.trim();
             },
           ),
           TextFormField(
@@ -147,7 +148,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               return null;
             },
             onSaved: (value) {
-              newUserModel.city = value;
+              newUserModel.city = value.trim();
             },
           ),
           TextFormField(
@@ -195,7 +196,7 @@ class MyCustomFormState extends State<MyCustomForm> {
         password: newUserModel.password,
       ))
           .user;
-      user.sendEmailVerification().then((value) => print("EMail Sent"));
+      user.sendEmailVerification().then((value) => print("Email Sent"));
       print(user.toString());
     } catch (err) {
       print(err.toString());

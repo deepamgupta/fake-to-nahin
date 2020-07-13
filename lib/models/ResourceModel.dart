@@ -4,12 +4,13 @@ class ResourceModel {
   String dateCreated;
   String username;
   String link;
+  String summary;
 
   // When we pass a parameter in a constructor with this keyword in flutter, the value you pass will  automatically linked to their respective properties
   // An optional parameter is passed in square brackets. (e.g. -> [this._description])
 
   // Constructor 1 -> when we create a new Todo and the database hasn't assigned an id yet.
-  ResourceModel(this.username, this.dateCreated, this.link);
+  ResourceModel(this.username, this.dateCreated, this.link, this.summary);
 
   // There can be only one un-named constructor in a class, sohere we have to use a named constructor.
 
@@ -23,6 +24,7 @@ class ResourceModel {
     map["dateCreated"] = dateCreated;
     map["username"] = username;
     map["link"] = link;
+    map["summary"] = summary;
 
     if (id != null) {
       map["id"] = id;
@@ -30,19 +32,15 @@ class ResourceModel {
     return map;
   }
 
-
-  
-
 // Constructor 3 -> This will do just opposite of toMap(); It will take a dynamic object and covert it into a Todo
   ResourceModel.toObject(dynamic o) {
     this.id = o["id"];
     this.dateCreated = o["dateCreated"];
     this.username = o["username"];
     this.link = o["link"];
+    this.summary = o["summary"];
   }
 }
-
-
 
 // Function random(){
 //   var sampleJSON = {
