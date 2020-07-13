@@ -163,9 +163,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Row(
                   children: [
                     Text('E-mail ID:', style: TextStyle(fontSize: 20)),
-                    Text(globals.currentUser.email,
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
+                    Expanded(
+                      child: Text(globals.currentUser.email,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                    )
                   ],
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 )),

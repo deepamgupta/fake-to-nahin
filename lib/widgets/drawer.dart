@@ -14,14 +14,45 @@ class _DrawerButtonState extends State<DrawerButton> {
           addRepaintBoundaries: true,
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
-              child: Text('Fake To Nahin',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                      color: Colors.white)),
-              decoration: BoxDecoration(color: Colors.lightBlue[800]),
+            UserAccountsDrawerHeader(
+              accountName: Text(
+                "Hello ${globals.currentUser.firstName}!\n${'@' + globals.currentUser.username}",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              accountEmail: Text(globals.currentUser.email),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor:
+                    Theme.of(context).platform == TargetPlatform.iOS
+                        ? Colors.blue
+                        : Colors.white,
+                child: globals.currentUser.imagePath == null
+                    ? Text(
+                        globals.currentUser.firstName[0] +
+                            globals.currentUser.lastName[0],
+                        style: TextStyle(fontSize: 40.0),
+                      )
+                    : CircleAvatar(
+                        radius: double.infinity,
+                        backgroundImage:
+                            NetworkImage(globals.currentUser.imagePath)),
+
+                // backgroundImage: NetworkImage(globals.currentUser.imagePath),
+              ),
             ),
+            // DrawerHeader(
+            //   child: Column(
+            //     children: <Widget>[
+            //       // CircleAvatar(backgroundImage: ,),
+
+            //       Text('Fake To Nahin',
+            //           style: TextStyle(
+            //               fontWeight: FontWeight.bold,
+            //               fontSize: 24,
+            //               color: Colors.white)),
+            //     ],
+            //   ),
+            //   decoration: BoxDecoration(color: Colors.lightBlue[800]),
+            // ),
             ListTile(
               title: Text('Home',
                   style: TextStyle(color: Colors.lightBlue[800], fontSize: 20)),
