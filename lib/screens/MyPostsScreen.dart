@@ -49,7 +49,7 @@ class _MyPostsScreenState extends State<MyPostsScreen> {
             child: StreamBuilder(
                 stream: Firestore.instance
                     .collection('posts')
-                    .where('username', isEqualTo: globals.currentUser.username)
+                    .where('email', isEqualTo: globals.currentUser.email)
                     .orderBy("dateCreated", descending: true)
                     .snapshots(),
                 builder: (context, snapshot) {

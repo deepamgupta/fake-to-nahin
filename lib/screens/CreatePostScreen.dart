@@ -121,6 +121,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     newPost = PostModel(
         title,
         globals.currentUser.username,
+        globals.currentUser.email,
         DateFormat("d MMM yyyy, h:mm a").format(DateTime.now()),
         description,
         downloadUrl);

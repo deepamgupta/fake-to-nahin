@@ -5,6 +5,7 @@ class PostModel {
   String description;
   String dateCreated;
   String username;
+  String email;
   String mediaPath;
   // List<ResourceModel> _resources;
 
@@ -15,6 +16,7 @@ class PostModel {
   PostModel(
     this.title,
     this.username,
+    this.email,
     this.dateCreated,
     this.description,
     this.mediaPath,
@@ -29,6 +31,7 @@ class PostModel {
     this.id,
     this.title,
     this.username,
+    this.email,
     this.dateCreated,
     this.description,
     this.mediaPath,
@@ -51,6 +54,7 @@ class PostModel {
     map["title"] = title;
     map["description"] = description;
     map["username"] = username;
+    map["email"] = email;
     map["dateCreated"] = dateCreated;
     map["mediaPath"] = mediaPath;
 
@@ -70,6 +74,7 @@ class PostModel {
     this.title = o["title"];
     this.description = o["description"];
     this.username = o["username"];
+    this.email = o["email"];
     this.dateCreated = o["dateCreated"];
     this.mediaPath = o["mediaPath"];
     // this.resources = o["resources"];

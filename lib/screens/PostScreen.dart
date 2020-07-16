@@ -1,11 +1,15 @@
+import 'dart:ui';
+
 import 'package:fake_to_nahin/models/PostModel.dart';
 import 'package:fake_to_nahin/models/ResourceModel.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../globals.dart' as globals;
 import 'package:intl/intl.dart';
+import 'package:photo_view/photo_view.dart';
 
 class PostScreen extends StatefulWidget {
   final PostModel post;
@@ -28,7 +32,7 @@ class _PostScreenState extends State<PostScreen> {
           title: Text('Fake To Nahin',
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
           actions: <Widget>[
-            post.username == globals.currentUser.username
+            post.email == globals.currentUser.email
                 ? RaisedButton(
                     textTheme: ButtonTextTheme.primary,
                     color: Theme.of(context).primaryColor,
@@ -69,13 +73,31 @@ class _PostScreenState extends State<PostScreen> {
                           style: TextStyle(fontSize: 18, color: Colors.grey))
                     ],
                   ),
-                  FractionallySizedBox(
-                      widthFactor: 0.95,
-                      child: Image.network(
-                        post.mediaPath,
-                        fit: BoxFit.contain,
-                        height: 400,
-                      )),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 20.0, 0, 20.0),
+                    child: InkWell(
+                      child: ConstrainedBox(
+                          constraints: BoxConstraints(maxHeight: 400.0),
+                          child: Image.network(
+                            post.mediaPath,
+                            fit: BoxFit.contain,
+                          )),
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ConstrainedBox(
+                                constraints: BoxConstraints(minHeight: 100.0),
+                                child: PhotoView(
+                                    enableRotation: true,
+                                    imageProvider: NetworkImage(
+                                      post.mediaPath,
+                                    )));
+                          },
+                        );
+                      },
+                    ),
+                  ),
                   Text("Description",
                       style: TextStyle(
                           color: Colors.black,
@@ -209,6 +231,7 @@ class _PostScreenState extends State<PostScreen> {
   Future addResourceToPost() async {
     ResourceModel newResource = ResourceModel(
         globals.currentUser.username,
+        globals.currentUser.email,
         DateFormat("d MMM yyyy, h:mm a").format(DateTime.now()),
         resourceController.text,
         summary);
