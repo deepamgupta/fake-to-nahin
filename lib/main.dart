@@ -1,4 +1,3 @@
-
 import 'package:fake_to_nahin/screens/ChangePassword.dart';
 import 'package:fake_to_nahin/screens/MyPostsScreen.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import 'screens/ProfileEditScreen.dart';
 import 'screens/ProfileScreen.dart';
 import 'screens/SignInScreen.dart';
 import 'screens/SignUpScreen.dart';
+
 bool loggedIn = false;
 
 void main() {
